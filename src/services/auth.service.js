@@ -1,9 +1,21 @@
 const Auth = require('../lib/auth.lib');
-const User = require('../lib/models/User');
+const jwt = require('jsonwebtoken');
+const { encryptPassword } = require('../utils/encryptPass');
+const { config } = require('../../config');
 
 class AuthService{
   constructor(){
     this.auth = new Auth();
+  }
+
+  generateToken(_id) {
+    const token = jwt.sign(
+      { id: _id }, 
+      config.secret, 
+      { expiresIn: 86400 }
+    );
+
+    return token
   }
 
   async register(data){
@@ -12,18 +24,90 @@ class AuthService{
     const dataUser = {
       username,
       email,
-      password: await User.encryptPassword(password)
+      password: await encryptPassword(password),
+      roles
     };
-    console.log(dataUser);
+  
     const newUser = await this.auth.register(dataUser);
 
-    // const token = jwt.sign(
-    //   { id: newUser._id }, 
-    //   'TOKEN', 
-    //   { expiresIn: 86400 }
-    // );
+    
 
-    return newUser;
+    return this.generateToken(newUser._id);
+  }
+
+  async signin(data) {
+    const {email, password} = data;
+
+    const dataUser = {
+      email,
+      password
+    }
+
+    const logUser = await this.auth.signin(dataUser);
+    if(logUser.status === 'failed'){
+      return logUser;
+    }else{
+      return {
+        token: this.generateToken(logUser.data._id),
+        message: 'Login succefully'
+      };
+    }
+
+  }
+
+  async verifyAccessToken(token){
+    try{
+      const decoded =  jwt.verify(token, config.secret);;
+      const user = await this.auth.checkUserId(decoded.id);
+      if(!user){
+        return false;
+      }
+      return true;
+    }catch(err){
+      console.log('Token unauthorized')
+    }
+  }
+
+  async verifyIsModerator(token){
+    try{
+      const decoded =  jwt.verify(token, config.secret);;
+      const user = await this.auth.checkUserId(decoded.id);
+      if(!user){
+        return false;
+      }
+
+      const role = await this.auth.checkRole(user);
+      for(let i = 0; i < role.length; i++){
+        if(role[i].name === 'moderator'){
+          return true;
+        }
+      }
+
+      return false;
+    }catch(err){
+      console.log('Need to be a moderator');
+    }
+  }
+
+  async verifyIsAdmin(token){
+    try{
+      const decoded =  jwt.verify(token, config.secret);;
+      const user = await this.auth.checkUserId(decoded.id);
+      if(!user){
+        return false;
+      }
+
+      const role = await this.auth.checkRole(user);
+      for(let i = 0; i < role.length; i++){
+        if(role[i].name === 'admin'){
+          return true;
+        }
+      }
+
+      return false;
+    }catch(err){
+      console.log('Need to be an admin');
+    }
   }
 }
 

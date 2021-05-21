@@ -1,5 +1,6 @@
 const express = require('express');
 const ProductService = require('../services/product.service');
+const { verifyToken, isModerator, isAdmin } = require('../middlewares/auth.jwt');
 
 const productsAPI = (app) => {
   const router = express.Router();
@@ -41,7 +42,7 @@ const productsAPI = (app) => {
     }
   });
 
-  router.post('/', async (req, res, next) => {
+  router.post('/', [verifyToken, isAdmin], async (req, res, next) => {
     const { body: product } = req;
 
     try {
@@ -58,7 +59,7 @@ const productsAPI = (app) => {
     }
   });
 
-  router.put('/:productId', async (req, res, next) => {
+  router.put('/:productId', [verifyToken, isModerator], async (req, res, next) => {
     const { productId } = req.params;
     const { body: product } = req;
 
@@ -76,7 +77,7 @@ const productsAPI = (app) => {
     }
   });
 
-  router.delete('/:productId', async (req, res, next) => {
+  router.delete('/:productId', [verifyToken, isAdmin], async (req, res, next) => {
     const { productId } = req.params;
 
     try{

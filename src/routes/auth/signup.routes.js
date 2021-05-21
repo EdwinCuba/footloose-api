@@ -11,12 +11,12 @@ const signUp = ( app ) => {
     const { body: data } = req;
 
     try{
-      const a = await authService.register(data);
+      const token = await authService.register(data);
 
       res
         .status(200)
         .json({
-          data: a,
+          token: token,
           message: 'register succesfully'
         });
     }catch(err){

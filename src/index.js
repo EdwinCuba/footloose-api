@@ -2,7 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 
 const {config } = require('../config');
-const connectDB = require('./utils/database');
+const connectDB = require('./lib/database');
+const createRoles = require('./lib/inistialSetup');
 
 const productsAPI = require('./routes/products.routes');
 const signUp = require('./routes/auth/signup.routes');
@@ -14,6 +15,7 @@ app.use(morgan('tiny'));
 app.use(express.json());
 
 connectDB();
+createRoles();
 
 productsAPI(app);
 signIn(app);
