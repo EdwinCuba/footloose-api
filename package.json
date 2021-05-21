@@ -1,0 +1,40 @@
+{
+  "name": "footloose-api",
+  "version": "1.0.0",
+  "description": "backend of Footloose ",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon ./src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdwinOlaffCubaDavila/footloose-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "author": "Edwin Cuba <edwincubad@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/EdwinOlaffCubaDavila/footloose-api/issues"
+  },
+  "homepage": "https://github.com/EdwinOlaffCubaDavila/footloose-api#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv-flow": "^3.2.0",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.7",
+    "mongoose": "^5.12.10",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.26.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.0"
+  }
+}
