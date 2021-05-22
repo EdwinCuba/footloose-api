@@ -46,8 +46,19 @@ class Auth{
 
   async checkRole(user){
     const roles = await Role.find({ _id: { $in: user.roles } });
-    console.log(roles);
     return roles;
+  }
+
+  async checkUsername(username){
+    const user = await User.findOne({ username }, { password: 0 });
+    console.log(user);
+    return user;
+  }
+
+  async checkEmail(email){
+    const user = await User.findOne({ email }, { password: 0 });
+    console.log(user);
+    return user;
   }
 }
 

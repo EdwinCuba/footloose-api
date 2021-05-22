@@ -6,6 +6,7 @@ const connectDB = require('./lib/database');
 const createRoles = require('./lib/inistialSetup');
 
 const productsAPI = require('./routes/products.routes');
+const usersAPI = require('./routes/user.routes');
 const signUp = require('./routes/auth/signup.routes');
 const signIn = require('./routes/auth/signin.routes');
 
@@ -18,6 +19,7 @@ connectDB();
 createRoles();
 
 productsAPI(app);
+usersAPI(app);
 signIn(app);
 signUp(app);
 

@@ -1,5 +1,6 @@
 const express = require('express');
 const AuthService = require('../../services/auth.service');
+const { checkDuplicateUsernameOrEmail } = require('../../middlewares/verifySignup');
 
 const signUp = ( app ) => {
   const router = express.Router();
@@ -7,7 +8,7 @@ const signUp = ( app ) => {
 
   const authService = new AuthService();
 
-  router.post('/', async (req, res, next) => {
+  router.post('/',  checkDuplicateUsernameOrEmail,async (req, res, next) => {
     const { body: data } = req;
 
     try{

@@ -19,7 +19,7 @@ const verifyToken =  async ( req, res, next) => { //eslint-disable-line
       .status(401)
       .json({
         status: 'failed',
-        message: 'Unauthorized'
+        message: 'The token is incorrect or not exist'
       })
   }
 

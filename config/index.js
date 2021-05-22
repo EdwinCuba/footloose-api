@@ -8,7 +8,8 @@ const config = {
   dbPassword: process.env.DB_PASSWORD,
   dbHost: process.env.DB_HOST,
   dbName: process.env.DB_NAME,
-  secret: process.env.SECRET
+  secret: process.env.SECRET,
+  roles: process.env.ROLES
 }
 
 module.exports = { config }

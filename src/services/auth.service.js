@@ -109,6 +109,38 @@ class AuthService{
       console.log('Need to be an admin');
     }
   }
+
+  async verifyRoles(roles){
+    for(let i = 0; i < roles.length; i++){
+      if(!config.roles.includes(roles[i])){
+        return {
+          status: 'failed',
+          message: `the role ${roles[i]} not exist`
+        };
+      }
+    }
+
+    return true;
+  }
+
+  async verifyDuplicate(username, email){
+    const isUsernameDuplicate = await this.auth.checkUsername(username);
+    if(isUsernameDuplicate){
+      return {
+        status: 'failed',
+        message: 'the username already exists'
+      }
+    }
+
+    const isEmailDuplicate = await this.auth.checkEmail(email);
+    if(isEmailDuplicate){
+      return {
+        status: 'failed',
+        message: 'the email already exists'
+      }
+    }
+    return true;
+  }
 }
 
 module.exports = AuthService;
