@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const {config } = require('../config');
 const connectDB = require('./lib/database');
@@ -14,6 +15,7 @@ const app = express();
 
 app.use(morgan('tiny'));
 app.use(express.json());
+app.use(cors());
 
 connectDB();
 createRoles();

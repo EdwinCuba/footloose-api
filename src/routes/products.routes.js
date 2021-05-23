@@ -9,10 +9,10 @@ const productsAPI = (app) => {
   const productService = new ProductService();
 
   router.get('/', async (req, res, next) => {
-    const { tags } = req.query;
+    const { category } = req.query;
 
     try {
-      const products = await productService.getProducts({ tags });
+      const products = await productService.getProducts({category});
 
       res
         .status(200)
