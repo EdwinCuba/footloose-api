@@ -10,6 +10,7 @@ const productsAPI = require('./routes/products.routes');
 const usersAPI = require('./routes/user.routes');
 const signUp = require('./routes/auth/signup.routes');
 const signIn = require('./routes/auth/signin.routes');
+const brandsAPI = require('./routes/brands.routes.js');
 
 const app = express();
 
@@ -22,6 +23,7 @@ createRoles();
 
 productsAPI(app);
 usersAPI(app);
+brandsAPI(app);
 signIn(app);
 signUp(app);
 

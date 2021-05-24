@@ -49,6 +49,7 @@ class AuthService{
     }else{
       return {
         token: this.generateToken(logUser.data._id),
+        user: logUser.data,
         message: 'Login succefully'
       };
     }

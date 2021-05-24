@@ -35,7 +35,10 @@ class Auth{
     return {
       status: 'done',
       message: 'Login succesfully',
-      data: userFound
+      data: {
+        ...userFound._doc,
+        password: 0
+      }
     }
   }
 
